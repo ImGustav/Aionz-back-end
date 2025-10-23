@@ -3,7 +3,10 @@ import { CreateCategoryDto } from "../../dto/request/create-category.dto";
 import { Category } from "@prisma/client";
 import { UpdateCategoryDto } from "../../dto/request/update-category.dto";
 import { CategoryRepositoryInterface } from "../interfaces/category-repository.interface";
+import { Injectable } from "@nestjs/common";
 
+
+@Injectable()
 export class CategoryRepository implements CategoryRepositoryInterface {
     constructor( private readonly prisma: PrismaService ){}
 
