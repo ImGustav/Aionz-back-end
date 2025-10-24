@@ -8,7 +8,7 @@ A API foi construída com NestJS, Prisma ORM e PostgreSQL, e oferece um sistema 
 
 O esquema do banco de dados para este projeto é composto pelas seguintes entidades e seus relacionamentos:
 
-<img src="./assets/MER.png" alt="Modelo de Entidade e Relacionamento do Banco de Dados" width="600"/>
+<img src="./assets/MER.jpg" alt="Modelo de Entidade e Relacionamento do Banco de Dados" width="600"/>
 
 **Descrição das Entidades:**
 
