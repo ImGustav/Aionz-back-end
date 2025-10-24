@@ -5,17 +5,35 @@ import { ProdutoServiceInterface } from '../domain/interfaces/produto-service.in
 import { ResponseProdutos } from '../dto/response/response-produto.dto';
 import { ProdutoRepository } from '../domain/repositories/produto.repository';
 import { plainToInstance } from 'class-transformer';
+import { CategoryRepository } from 'src/modules/category/domain/repositories/category.repository';
 
 
 @Injectable()
-export class ProdutoService{
+export class ProdutoService {
   constructor(
-    private readonly produtoRepository: ProdutoRepository
+    private readonly produtoRepository: ProdutoRepository,
+    private readonly categoriaRepository: CategoryRepository
   ){}
 
-  // create(createProdutoDto: CreateProdutoDto) {
-  //   return 'This action adds a new produto';
-  // }
+  async create(imageFileName: string, createProdutoDto: CreateProdutoDto): Promise<ResponseProdutos> {
+    const pathImage = `/uploads/${imageFileName}`
+
+    const categoryExist = await this.categoriaRepository.findById(createProdutoDto.category_id)
+    if(!categoryExist){
+      throw new NotFoundException("Category id not found.")
+    }
+
+    const data = {
+      ...createProdutoDto,
+      image: pathImage
+    }
+
+    const productToCreate = await this.produtoRepository.create(data)
+
+    return plainToInstance(ResponseProdutos, productToCreate, {
+      excludeExtraneousValues: true
+    })
+  }
 
   async findAll(): Promise<ResponseProdutos[]> {
     const allProducts = await this.produtoRepository.findAll()
@@ -37,7 +55,7 @@ export class ProdutoService{
   }
 
   async update(id: number, updateProdutoDto: UpdateProdutoDto) {
-    return `This action updates a #${id} produto`;
+
   }
 
   async remove(id: number): Promise<void> {

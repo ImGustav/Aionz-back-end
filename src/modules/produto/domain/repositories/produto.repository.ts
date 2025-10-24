@@ -1,15 +1,15 @@
 import { PrismaService } from "src/database/services/prisma.service";
 import { ProdutoRepositoryeInterface } from "../interfaces/produto-repository.interface";
 import { Product } from "@prisma/client";
-import { CreateProdutoDto } from "../../dto/request/create-produto.dto";
 import { UpdateProdutoDto } from "../../dto/request/update-produto.dto";
 import { Injectable } from "@nestjs/common";
+import { produtoRepositoryDto } from "../../dto/request/produto-repository.dto";
 
 @Injectable()
 export class ProdutoRepository implements ProdutoRepositoryeInterface{
     constructor( private readonly prisma: PrismaService ){}
 
-    async create(createProduct: CreateProdutoDto): Promise<Product> {
+    async create(createProduct: produtoRepositoryDto): Promise<Product> {
         const productToCreate = await this.prisma.product.create({
             data: {
                 ...createProduct

@@ -1,7 +1,7 @@
 import { Type } from "class-transformer"
-import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, Max, Min } from "class-validator"
+import { IsNotEmpty, IsNumber, IsPositive, IsString, Max, Min } from "class-validator"
 
-export class CreateProdutoDto {
+export class produtoRepositoryDto {
     @IsNotEmpty()
     @IsPositive()
     @Type(()=> Number)
@@ -9,14 +9,13 @@ export class CreateProdutoDto {
     
     @IsNotEmpty()
     @IsString()
-    // @Min(10)
-    // @Max(50)
+    @Min(10)
+    @Max(50)
     name: string
 
-    @IsOptional()
     @IsString()
-    // @Min(10)
-    // @Max(70)
+    @Min(10)
+    @Max(70)
     description: string
 
     @IsNotEmpty()
@@ -25,8 +24,8 @@ export class CreateProdutoDto {
     @Type(()=> Number)
     price: number
 
-    // @IsNotEmpty()
-    // @IsString()
-    // @Min(3)
-    // image: string
+    @IsNotEmpty()
+    @IsString()
+    @Min(3)
+    image: string
 }

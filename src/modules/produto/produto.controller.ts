@@ -1,16 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
 import { ProdutoService } from './services/produto.service';
 import { CreateProdutoDto } from './dto/request/create-produto.dto';
 import { UpdateProdutoDto } from './dto/request/update-produto.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { multerConfigFactory } from 'src/config/multer.config';
 
 
-@Controller('produto')
+@Controller('produtos')
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) {}
 
   @Post()
-  create(@Body() createProdutoDto: CreateProdutoDto) {
-    return this.produtoService.create(createProdutoDto);
+  @UseInterceptors(FileInterceptor('image'))
+  create(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() createProdutoDto: CreateProdutoDto
+  ) 
+  {
+    if (!file) {
+      throw new BadRequestException('O arquivo de imagem é obrigatório.');
+    }
+
+    return this.produtoService.create(file.filename, createProdutoDto);
   }
 
   @Get()
