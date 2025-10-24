@@ -1,0 +1,47 @@
+@baseUrl = http://localhost:3000
+
+### Encontrar todos as categorias (dependencia necessária para criação)
+# @name find_all_category
+GET {{baseUrl}}/category
+Content-Type: application/json
+
+
+### Criar um produto
+# @name create_produto
+POST {{baseUrl}}/produto
+Content-Type: application/json
+
+{
+    "campus_id": 1,
+    "name": "Laboratorio 120",
+    "localization": "Bloco H, piso 3",
+    "capacity": 20
+}
+
+
+### Encontrar todos os produto
+# @name find_all_produto
+GET {{baseUrl}}/produto
+Content-Type: application/json
+
+
+### Econtrar um produto
+# @name find_one
+GET {{baseUrl}}/produto/1
+Content-Type: application/json
+
+
+### Atualizar um produto
+# @name update_produto
+PATCH  {{baseUrl}}/produto/2
+Content-Type: application/json
+
+{
+    "capacity": 0
+}
+
+
+### "Deletar" um produto
+# @name soft_delete
+DELETE {{baseUrl}}/produto/1
+Content-Type: application/json

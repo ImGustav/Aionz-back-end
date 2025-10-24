@@ -1,0 +1,38 @@
+@baseUrl = http://localhost:3000
+
+### Criar uma category
+# @name create_category
+POST {{baseUrl}}/category
+Content-Type: application/json
+
+{
+    "name": "Eletronicos",
+}
+
+
+### Encontrar todos os category
+# @name find_all_category
+GET {{baseUrl}}/category
+Content-Type: application/json
+
+
+### Econtrar uma category
+# @name find_one
+GET {{baseUrl}}/category/1
+Content-Type: application/json
+
+
+### Atualizar uma category
+# @name update_category
+PATCH  {{baseUrl}}/category/2
+Content-Type: application/json
+
+{
+    "name": "Toys",
+}
+
+
+### "Deletar" uma category
+# @name soft_delete
+DELETE {{baseUrl}}/category/1
+Content-Type: application/json

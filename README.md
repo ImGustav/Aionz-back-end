@@ -1,98 +1,155 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Projeto AIONZ - Back-end API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este repositório contém o código-fonte de uma API RESTful completa, desenvolvida como parte da Avaliação Prática para Vaga Júnior Full Stack.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+A API foi construída com NestJS, Prisma ORM e PostgreSQL, e oferece um sistema de CRUD para gerenciar produtos e categorias, incluindo uma funcionalidade robusta de upload de imagens.
 
-## Description
+## Modelo de Entidade e Relacionamento (MER)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+O esquema do banco de dados para este projeto é composto pelas seguintes entidades e seus relacionamentos:
 
-## Project setup
+<img src="./assets/MER.png" alt="Modelo de Entidade e Relacionamento do Banco de Dados" width="600"/>
 
-```bash
-$ npm install
-```
+**Descrição das Entidades:**
 
-## Compile and run the project
+* **`Category`**: Representa as categorias de produtos.
+    * `id`: Chave primária.
+    * `name`: Nome único da categoria.
+* **`Product`**: Representa os produtos disponíveis.
+    * `id`: Chave primária.
+    * `category_id`: Chave estrangeira que referencia a categoria à qual o produto pertence.
+    * `name`: Nome do produto.
+    * `description`: Descrição detalhada do produto.
+    * `price`: Preço do produto.
+    * `image`: Caminho da imagem do produto no servidor (ex: `/static/uploads/abc123def456.jpg`).
 
-```bash
-# development
-$ npm run start
+## Tecnologias Utilizadas
 
-# watch mode
-$ npm run start:dev
+* **NestJS**: Framework Node.js progressivo para construção de aplicativos de lado do servidor.
+* **TypeScript**: Superconjunto tipado de JavaScript para maior segurança e manutenibilidade.
+* **Prisma ORM**: ORM moderno para Node.js e TypeScript.
+* **PostgreSQL**: Sistema de gerenciamento de banco de dados relacional.
+* **Multer**: Middleware Node.js para lidar com `multipart/form-data` (uploads).
+* **class-validator / class-transformer**: Bibliotecas para validação e transformação de DTOs.
+* **Docker**: Plataforma de containerização para desenvolvimento e produção.
+* **Dotenv**: Para gerenciamento de variáveis de ambiente.
 
-# production mode
-$ npm run start:prod
-```
+## Instalação e Execução (Local)
 
-## Run tests
+Siga os passos abaixo para configurar e rodar o projeto em sua máquina local:
 
-```bash
-# unit tests
-$ npm run test
+1.  **Clone o Repositório:**
+    ```bash
+    git clone [URL_DO_SEU_REPOSITORIO]
+    cd back-end
+    ```
 
-# e2e tests
-$ npm run test:e2e
+2.  **Instale as Dependências:**
+    ```bash
+    npm install
+    ```
 
-# test coverage
-$ npm run test:cov
-```
+3.  **Configuração do Ambiente:**
 
-## Deployment
+    Crie uma cópia do arquivo `.env.example` na raiz do projeto e renomeie para `.env`. Em seguida, preencha as variáveis de ambiente:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+    ```env
+    # Exemplo de .env
+    DATABASE_URL="postgresql://[USUARIO]:[SENHA]@localhost:5432/[NOME_DO_BANCO]?schema=public"
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+    # Variáveis para o Multer
+    MULTER_DEST=./public/uploads
+    MULTER_MAX_SIZE=5242880 # 5MB
+    ```
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+4.  **Execute as Migrações do Prisma:**
+    ```bash
+    npx prisma migrate dev
+    ```
+    Isso aplicará as migrações do banco de dados e gerará o cliente Prisma.
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+5.  **Crie a Pasta de Uploads:**
+    O `MulterModule` espera que esta pasta exista.
+    ```bash
+    mkdir -p public/uploads
+    ```
 
-## Resources
+6.  **Inicie o Servidor:**
+    ```bash
+    npm run start:dev --watch
+    ```
+    O servidor estará rodando em `http://localhost:3000`.
 
-Check out a few resources that may come in handy when working with NestJS:
+## Executando com Docker
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Este projeto está configurado para ser executado inteiramente com Docker, facilitando a inicialização.
 
-## Support
+1.  **Construa a Imagem Docker:**
+    A partir da raiz do projeto, execute:
+    ```bash
+    docker build -t aionz-api .
+    ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+2.  **Execute o Container:**
+    Certifique-se de que seu banco de dados PostgreSQL esteja acessível.
+    ```bash
+    docker run -p 3000:3000 \
+      -e DATABASE_URL="[STRING_DE_CONEXAO_DO_SEU_BANCO]" \
+      --name aionz-container \
+      aionz-api
+    ```
+    *Nota: Se o seu banco de dados também estiver rodando em um container Docker, use o nome do container do banco na string de conexão (ex: `postgresql://user:pass@postgres-db:5432/aionz`). Se estiver rodando no seu *host* (localhost), você pode precisar usar `host.docker.internal` em vez de `localhost`.*
 
-## Stay in touch
+## Endpoints da API
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+A API expõe os seguintes endpoints:
 
-## License
+### Categorias (`/category`)
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+* **`POST /category`**
+    * Cria uma nova categoria.
+    * **Body:** `CreateCategoryDto` (JSON)
+* **`GET /category`**
+    * Retorna todas as categorias.
+* **`GET /category/:id`**
+    * Retorna uma categoria específica pelo ID.
+* **`PATCH /category/:id`**
+    * Atualiza uma categoria existente.
+    * **Body:** `UpdateCategoryDto` (JSON)
+* **`DELETE /category/:id`**
+    * Deleta uma categoria.
+
+### Produtos (`/produtos`)
+
+* **`POST /produtos`**
+    * Cria um novo produto com upload de imagem.
+    * **Content-Type:** `multipart/form-data`
+    * **Body:**
+        * `image`: (File) O arquivo de imagem.
+        * `category_id`: (Text) ID da categoria.
+        * `name`: (Text) Nome do produto.
+        * `description`: (Text) Descrição do produto.
+        * `price`: (Text) Preço do produto.
+* **`GET /produtos`**
+    * Retorna todos os produtos.
+* **`GET /produtos/:id`**
+    * Retorna um produto específico pelo ID.
+* **`PATCH /produtos/:id`**
+    * Atualiza um produto existente.
+    * **Body:** `UpdateProdutoDto` (JSON)
+* **`DELETE /produtos/:id`**
+    * Deleta um produto.
+
+## Swagger (Documentação da API)
+
+A documentação completa da API, com todos os endpoints, DTOs e respostas, é gerada automaticamente pelo Swagger (OpenAPI).
+
+Após iniciar o servidor, você pode acessá-la em:
+
+**[http://localhost:3000/api](http://localhost:3000/api)**
+
+## Autor
+
+**Gustavo Henrique Carvalho**
+* **Email:** [oakhenry2@gmail.com](mailto:oakhenry2@gmail.com)
+* **LinkedIn:** [gustavo-oak](https://www.linkedin.com/in/gustavo-oak/)
