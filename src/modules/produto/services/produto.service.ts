@@ -9,7 +9,7 @@ import { CategoryRepository } from 'src/modules/category/domain/repositories/cat
 
 
 @Injectable()
-export class ProdutoService {
+export class ProdutoService implements ProdutoServiceInterface{
   constructor(
     private readonly produtoRepository: ProdutoRepository,
     private readonly categoriaRepository: CategoryRepository
@@ -43,7 +43,7 @@ export class ProdutoService {
     })
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<ResponseProdutos> {
     const productExist = await this.produtoRepository.findById(id)
     if(!productExist){
       throw new NotFoundException("Product id not found.")
@@ -54,7 +54,7 @@ export class ProdutoService {
     })
   }
 
-  async update(id: number, updateProdutoDto: UpdateProdutoDto) {
+  async update(id: number, updateProdutoDto: UpdateProdutoDto): Promise<ResponseProdutos> {
 
   }
 
