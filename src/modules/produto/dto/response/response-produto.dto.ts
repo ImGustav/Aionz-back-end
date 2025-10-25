@@ -1,30 +1,30 @@
-import { Exclude, Expose, Type } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer'
 
 class ResponseCategorySimple {
   @Expose()
-  id: number;
+  id: number
   @Expose()
-  name: string;
+  name: string
 }
 
 @Exclude()
 export class ResponseProdutos {
   @Expose()
-  id: number;
+  id: number
 
   @Expose()
-  name: string;
+  name: string
 
   @Expose()
-  description: string;
+  description: string
 
   @Expose()
-  price: number;
+  price: number
 
   @Expose()
-  image: string;
+  image: string
 
   @Expose()
   @Type(() => ResponseCategorySimple)
-  category: ResponseCategorySimple;
+  category: ResponseCategorySimple
 }

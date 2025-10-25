@@ -1,9 +1,9 @@
-import { PrismaService } from 'src/database/services/prisma.service';
-import { CreateCategoryDto } from '../../dto/request/create-category.dto';
-import { Category } from '@prisma/client';
-import { UpdateCategoryDto } from '../../dto/request/update-category.dto';
-import { CategoryRepositoryInterface } from '../interfaces/category-repository.interface';
-import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/database/services/prisma.service'
+import { CreateCategoryDto } from '../../dto/request/create-category.dto'
+import { Category } from '@prisma/client'
+import { UpdateCategoryDto } from '../../dto/request/update-category.dto'
+import { CategoryRepositoryInterface } from '../interfaces/category-repository.interface'
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class CategoryRepository implements CategoryRepositoryInterface {
@@ -14,27 +14,27 @@ export class CategoryRepository implements CategoryRepositoryInterface {
       data: {
         ...createCategory,
       },
-    });
+    })
 
-    return createCat;
+    return createCat
   }
 
   async findAll(): Promise<Category[]> {
-    const allCat = await this.prisma.category.findMany();
+    const allCat = await this.prisma.category.findMany()
 
-    return allCat;
+    return allCat
   }
 
   async findById(id: number): Promise<Category | null> {
-    const category = await this.prisma.category.findUnique({ where: { id } });
+    const category = await this.prisma.category.findUnique({ where: { id } })
 
-    return category;
+    return category
   }
 
   async findByName(name: string): Promise<Category | null> {
-    const category = await this.prisma.category.findUnique({ where: { name } });
+    const category = await this.prisma.category.findUnique({ where: { name } })
 
-    return category;
+    return category
   }
 
   async update(
@@ -46,16 +46,16 @@ export class CategoryRepository implements CategoryRepositoryInterface {
       data: {
         ...updateCategoryDto,
       },
-    });
+    })
 
-    return categoryToUpdate;
+    return categoryToUpdate
   }
 
   async delete(id: number): Promise<Category> {
     const categoryToDelete = await this.prisma.category.delete({
       where: { id },
-    });
+    })
 
-    return categoryToDelete;
+    return categoryToDelete
   }
 }

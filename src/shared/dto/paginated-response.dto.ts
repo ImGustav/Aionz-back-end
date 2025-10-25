@@ -1,13 +1,13 @@
-import { IsArray, IsNumber } from 'class-validator';
+import { IsArray, IsNumber } from 'class-validator'
 
-export class PaginatedProductsResponseDto<TData> {
+export class PaginatedResponseDto<TData> {
   @IsArray()
-  data: TData[];
+  data: TData[]
 
   @IsNumber()
-  total: number;
+  total: number
 
   constructor(data: TData[], total: number) {
-    ((this.data = data), (this.total = total));
+    ;((this.data = data), (this.total = total))
   }
 }

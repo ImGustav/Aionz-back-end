@@ -1,4 +1,4 @@
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer'
 
 @Exclude()
 export class ResponseCategory {
@@ -6,11 +6,11 @@ export class ResponseCategory {
    * ID da categoria de reposta
    */
   @Expose()
-  id: number;
+  id: number
 
   /**
    * Name da categoria de reposta
    */
   @Expose()
-  name: string;
+  name: string
 }

@@ -8,30 +8,52 @@ Content-Type: application/json
 
 ### Criar um produto
 # @name create_produto
-POST {{baseUrl}}/produto
-Content-Type: multipart/form-data
+POST {{baseUrl}}/produtos
+Content-Type: multipart/form-data; boundary=---------------------------formulario
+-----------------------------formulario
+Content-Disposition: form-data; name="name"
 
-{
-    "category_id": 1,
-    "name":""
-}
+HQ do Capuz Vermelho
+
+-----------------------------formulario
+Content-Disposition: form-data; name="description"
+
+Descrição completa da HQ, incluindo detalhes da edição.
+
+-----------------------------formulario
+Content-Disposition: form-data; name="price"
+
+129.90
+
+-----------------------------formulario
+Content-Disposition: form-data; name="category_id"
+
+1
+
+-----------------------------formulario
+Content-Disposition: form-data; name="image"; filename="capa-hq.png"
+Content-Type: image/png
+
+<@ ./caminho/local/para/sua/imagem.png>
+
+-----------------------------formulario--
 
 
 ### Encontrar todos os produto
 # @name find_all_produto
-GET {{baseUrl}}/produto
+GET {{baseUrl}}/produtos
 Content-Type: application/json
 
 
 ### Econtrar um produto
 # @name find_one
-GET {{baseUrl}}/produto/1
+GET {{baseUrl}}/produtos/1
 Content-Type: application/json
 
 
 ### Atualizar um produto
 # @name update_produto
-PATCH  {{baseUrl}}/produto/2
+PATCH  {{baseUrl}}/produtos/2
 Content-Type: application/json
 
 {
@@ -41,5 +63,5 @@ Content-Type: application/json
 
 ### "Deletar" um produto
 # @name soft_delete
-DELETE {{baseUrl}}/produto/1
+DELETE {{baseUrl}}/produtos/1
 Content-Type: application/json
