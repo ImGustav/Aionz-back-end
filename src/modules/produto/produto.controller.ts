@@ -40,7 +40,6 @@ export class ProdutoController {
     if (!file) {
       throw new BadRequestException('O arquivo de imagem é obrigatório.')
     }
-
     return this.produtoService.create(file.filename, createProdutoDto)
   }
 
