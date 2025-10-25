@@ -4,6 +4,18 @@ Este repositório contém o código-fonte de uma API RESTful completa, desenvolv
 
 A API foi construída com NestJS, Prisma ORM e PostgreSQL, e oferece um sistema de CRUD para gerenciar produtos e categorias, incluindo uma funcionalidade robusta de upload de imagens.
 
+## Sumário
+
+* [Modelo de Entidade e Relacionamento (MER)](#modelo-de-entidade-e-relacionamento-mer)
+* [Tecnologias Utilizadas](#tecnologias-utilizadas)
+* [Executando com Docker](#executando-com-docker)
+* [Instalação e Execução (Local)](#instalação-e-execução-local)
+* [Endpoints da API](#endpoints-da-api)
+    * [Categorias (`/category`)](#categorias-category)
+    * [Produtos (`/produtos`)](#produtos-produtos)
+* [Swagger (Documentação da API)](#swagger-documentação-da-api)
+* [Autor](#autor)
+
 ## Modelo de Entidade e Relacionamento (MER)
 
 O esquema do banco de dados para este projeto é composto pelas seguintes entidades e seus relacionamentos:
@@ -51,8 +63,7 @@ Siga os passos abaixo para configurar e rodar o projeto API em sua máquina loca
 
 1.  **Clone o Repositório:**
     ```bash
-    git clone https://github.com/ImGustav/Aionz-back-end.git
-    cd back-end
+    git clone [https://github.com/ImGustav/Aionz-back-end.git](https://github.com/ImGustav/Aionz-back-end.git)
     ```
 
 2.  **Instale as Dependências:**
@@ -91,8 +102,12 @@ Siga os passos abaixo para configurar e rodar o projeto API em sua máquina loca
     *(Isso aplicará as migrações e gerará o cliente Prisma).*
 
 6.  **Popule o Banco (Seed - Opcional):**
-    A partir da so prisma (`src/databse/prisma`), execute o comando de seed:
+    A partir da raiz do projeto (`back-end`), execute o comando de seed, especificando o local do schema:
     ```bash
+    npx prisma db seed --schema=./src/database/prisma/schema.prisma
+
+    #ou caso esteja na pasta src/database/prisma use:
+
     npx prisma db seed
     ```
     *(Isso irá criar algumas categorias e produtos pré-selecionados. As imagens desses produtos estarão dentro da pasta `public`).*
