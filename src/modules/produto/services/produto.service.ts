@@ -9,96 +9,110 @@ import { CategoryRepository } from 'src/modules/category/domain/repositories/cat
 import { PaginationQueryDto } from 'src/shared/dto/pagination-query.dto';
 import { PaginatedProductsResponseDto } from 'src/shared/dto/paginated-response.dto';
 
-
 @Injectable()
-export class ProdutoService implements ProdutoServiceInterface{
+export class ProdutoService implements ProdutoServiceInterface {
   constructor(
     private readonly produtoRepository: ProdutoRepository,
-    private readonly categoriaRepository: CategoryRepository
-  ){}
+    private readonly categoriaRepository: CategoryRepository,
+  ) {}
 
-  async create(imageFileName: string, createProdutoDto: CreateProdutoDto): Promise<ResponseProdutos> {
-    const pathImage = `/uploads/${imageFileName}`
+  async create(
+    imageFileName: string,
+    createProdutoDto: CreateProdutoDto,
+  ): Promise<ResponseProdutos> {
+    const pathImage = `/uploads/${imageFileName}`;
 
-    const categoryExist = await this.categoriaRepository.findById(createProdutoDto.category_id)
-    if(!categoryExist){
-      throw new NotFoundException("Category id not found.")
+    const categoryExist = await this.categoriaRepository.findById(
+      createProdutoDto.category_id,
+    );
+    if (!categoryExist) {
+      throw new NotFoundException('Category id not found.');
     }
 
     const data = {
       ...createProdutoDto,
-      image: pathImage
-    }
+      image: pathImage,
+    };
 
-    const productToCreate = await this.produtoRepository.create(data)
+    const productToCreate = await this.produtoRepository.create(data);
 
     return plainToInstance(ResponseProdutos, productToCreate, {
-      excludeExtraneousValues: true
-    })
+      excludeExtraneousValues: true,
+    });
   }
 
-  async findAll(query: PaginationQueryDto): Promise<PaginatedProductsResponseDto<ResponseProdutos>> {
-    const { page, limit, search } = query
-    const skip = (page - 1) * limit
+  async findAll(
+    query: PaginationQueryDto,
+  ): Promise<PaginatedProductsResponseDto<ResponseProdutos>> {
+    const { page, limit, search } = query;
+    const skip = (page - 1) * limit;
 
     const [total, productList] = await Promise.all([
       this.produtoRepository.countProduct(search),
-      this.produtoRepository.findAll(limit, skip, search)
-    ])
+      this.produtoRepository.findAll(limit, skip, search),
+    ]);
 
-    const productsDto = productList.map(products =>
-      plainToInstance(ResponseProdutos, products, {excludeExtraneousValues: true})
-    )
+    const productsDto = productList.map((products) =>
+      plainToInstance(ResponseProdutos, products, {
+        excludeExtraneousValues: true,
+      }),
+    );
 
-    return new PaginatedProductsResponseDto(productsDto, total)
+    return new PaginatedProductsResponseDto(productsDto, total);
   }
 
   async findOne(id: number): Promise<ResponseProdutos> {
-    const productExist = await this.produtoRepository.findById(id)
-    if(!productExist){
-      throw new NotFoundException("Product id not found.")
+    const productExist = await this.produtoRepository.findById(id);
+    if (!productExist) {
+      throw new NotFoundException('Product id not found.');
     }
 
     return plainToInstance(ResponseProdutos, productExist, {
-      excludeExtraneousValues: true
-    })
+      excludeExtraneousValues: true,
+    });
   }
 
-  async update(id: number, updateProdutoDto: UpdateProdutoDto, imageFileName?: string): Promise<ResponseProdutos> {
-    const productExist = await this.produtoRepository.findById(id)
-    if(!productExist){
-      throw new NotFoundException("Product id not found.")
+  async update(
+    id: number,
+    updateProdutoDto: UpdateProdutoDto,
+    imageFileName?: string,
+  ): Promise<ResponseProdutos> {
+    const productExist = await this.produtoRepository.findById(id);
+    if (!productExist) {
+      throw new NotFoundException('Product id not found.');
     }
 
-    if(updateProdutoDto.category_id){
-      const categoryExist = await this.categoriaRepository.findById(updateProdutoDto.category_id)
-      if(!categoryExist){
-        throw new NotFoundException("Category id not found.")
+    if (updateProdutoDto.category_id) {
+      const categoryExist = await this.categoriaRepository.findById(
+        updateProdutoDto.category_id,
+      );
+      if (!categoryExist) {
+        throw new NotFoundException('Category id not found.');
       }
     }
 
-    const data: Record<string,any> = {
+    const data: Record<string, any> = {
       ...updateProdutoDto,
+    };
+
+    if (imageFileName) {
+      const pathImage = `/uploads/${imageFileName}`;
+      data.image = pathImage;
     }
 
-    if(imageFileName){
-      const pathImage = `/uploads/${imageFileName}`
-      data.image = pathImage
-    }
-
-    const productToUpdate = await this.produtoRepository.update(id, data)
+    const productToUpdate = await this.produtoRepository.update(id, data);
 
     return plainToInstance(ResponseProdutos, productToUpdate, {
-      excludeExtraneousValues: true
-    })
+      excludeExtraneousValues: true,
+    });
   }
 
   async remove(id: number): Promise<void> {
-    const productExist = await this.produtoRepository.findById(id)
-    if(!productExist){
-      throw new NotFoundException("Product id not found.")
+    const productExist = await this.produtoRepository.findById(id);
+    if (!productExist) {
+      throw new NotFoundException('Product id not found.');
     }
 
-    await this.produtoRepository.delete(id)
+    await this.produtoRepository.delete(id);
   }
 }

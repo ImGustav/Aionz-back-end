@@ -11,8 +11,6 @@ import { DatabaseModule } from 'src/database/database.module';
 
   exports: [CategoryRepository],
 
-  imports: [
-    DatabaseModule
-  ]
+  imports: [DatabaseModule],
 })
 export class CategoryModule {}

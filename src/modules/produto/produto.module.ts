@@ -21,7 +21,7 @@ import { multerConfigFactory } from 'src/config/multer.config';
     }),
 
     DatabaseModule,
-    CategoryModule
-  ]
+    CategoryModule,
+  ],
 })
 export class ProdutoModule {}

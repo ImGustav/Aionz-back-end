@@ -5,10 +5,15 @@ import { extname } from 'path';
 import { randomBytes } from 'crypto';
 import { BadRequestException } from '@nestjs/common';
 
-export const multerConfigFactory = (configService: ConfigService): MulterOptions => {
-  const destination = configService.get<string>('MULTER_DEST', './public/uploads');
-  console.log('Multer Destination (from factory):', destination)
-  
+export const multerConfigFactory = (
+  configService: ConfigService,
+): MulterOptions => {
+  const destination = configService.get<string>(
+    'MULTER_DEST',
+    './public/uploads',
+  );
+  console.log('Multer Destination (from factory):', destination);
+
   return {
     limits: {
       fileSize: +configService.get<number>('MULTER_MAX_SIZE', 5 * 1024 * 1024),
@@ -19,17 +24,19 @@ export const multerConfigFactory = (configService: ConfigService): MulterOptions
         callback(null, true);
       } else {
         callback(
-          new BadRequestException('Formato de arquivo inválido. Apenas imagens (jpg, jpeg, png, gif) são permitidas.'),
+          new BadRequestException(
+            'Formato de arquivo inválido. Apenas imagens (jpg, jpeg, png, gif) são permitidas.',
+          ),
           false,
         );
       }
     },
 
     storage: diskStorage({
-      destination: destination, 
+      destination: destination,
       filename: (req, file, callback) => {
-        const fileExtName = extname(file.originalname); 
-        const randomName = randomBytes(16).toString('hex'); 
+        const fileExtName = extname(file.originalname);
+        const randomName = randomBytes(16).toString('hex');
         callback(null, `${randomName}${fileExtName}`);
       },
     }),

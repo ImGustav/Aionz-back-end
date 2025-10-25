@@ -1,16 +1,16 @@
-import { 
-  Controller, 
-  Get, 
-  Post, 
-  Body, 
-  Patch, 
-  Param, 
-  Delete, 
-  UseInterceptors, 
-  UploadedFile, 
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFile,
   BadRequestException,
-  ParseIntPipe, 
-  Query
+  ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { ProdutoService } from './services/produto.service';
 import { CreateProdutoDto } from './dto/request/create-produto.dto';
@@ -28,16 +28,15 @@ export class ProdutoController {
    * Criação de um novo produto com upload de imagem.
    * A requisição deve ser 'multipart/form-data'.
    * @param file O arquivo de imagem (enviado no campo 'image').
-   * @param createProdutoDto 
+   * @param createProdutoDto
    * @returns ResponseProdutos
    */
   @Post()
   @UseInterceptors(FileInterceptor('image'))
   create(
     @UploadedFile() file: Express.Multer.File,
-    @Body() createProdutoDto: CreateProdutoDto
-  ): Promise<ResponseProdutos> 
-  {
+    @Body() createProdutoDto: CreateProdutoDto,
+  ): Promise<ResponseProdutos> {
     if (!file) {
       throw new BadRequestException('O arquivo de imagem é obrigatório.');
     }
@@ -50,7 +49,9 @@ export class ProdutoController {
    * @returns ResponseProdutos[]
    */
   @Get()
-  findAll(@Query() paginationQuery: PaginationQueryDto): Promise<PaginatedProductsResponseDto<ResponseProdutos>> { 
+  findAll(
+    @Query() paginationQuery: PaginationQueryDto,
+  ): Promise<PaginatedProductsResponseDto<ResponseProdutos>> {
     return this.produtoService.findAll(paginationQuery);
   }
 
@@ -60,8 +61,8 @@ export class ProdutoController {
    * @returns ResponseProdutos
    */
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseProdutos> { 
-    return this.produtoService.findOne(id); 
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseProdutos> {
+    return this.produtoService.findOne(id);
   }
 
   /**
@@ -75,9 +76,9 @@ export class ProdutoController {
   update(
     @Param('id', ParseIntPipe) id: number,
     @UploadedFile() file: Express.Multer.File,
-    @Body() updateProdutoDto: UpdateProdutoDto
-  ): Promise<ResponseProdutos> { 
-    return this.produtoService.update(id, updateProdutoDto, file?.filename); 
+    @Body() updateProdutoDto: UpdateProdutoDto,
+  ): Promise<ResponseProdutos> {
+    return this.produtoService.update(id, updateProdutoDto, file?.filename);
   }
 
   /**
@@ -86,7 +87,7 @@ export class ProdutoController {
    * @returns Promise<void>
    */
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number): Promise<void> { 
-    return this.produtoService.remove(id); 
+  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.produtoService.remove(id);
   }
 }

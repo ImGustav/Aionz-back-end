@@ -9,13 +9,11 @@ Content-Type: application/json
 ### Criar um produto
 # @name create_produto
 POST {{baseUrl}}/produto
-Content-Type: application/json
+Content-Type: multipart/form-data
 
 {
-    "campus_id": 1,
-    "name": "Laboratorio 120",
-    "localization": "Bloco H, piso 3",
-    "capacity": 20
+    "category_id": 1,
+    "name":""
 }
 
 
@@ -37,7 +35,7 @@ PATCH  {{baseUrl}}/produto/2
 Content-Type: application/json
 
 {
-    "capacity": 0
+    
 }
 
 
