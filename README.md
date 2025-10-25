@@ -63,7 +63,7 @@ Siga os passos abaixo para configurar e rodar o projeto API em sua máquina loca
 
 1.  **Clone o Repositório:**
     ```bash
-    git clone [https://github.com/ImGustav/Aionz-back-end.git](https://github.com/ImGustav/Aionz-back-end.git)
+    git clone https://github.com/ImGustav/Aionz-back-end.git
     ```
 
 2.  **Instale as Dependências:**
