@@ -9,13 +9,16 @@ import {
   UseInterceptors, 
   UploadedFile, 
   BadRequestException,
-  ParseIntPipe // <--- Adicionado
+  ParseIntPipe, 
+  Query
 } from '@nestjs/common';
 import { ProdutoService } from './services/produto.service';
 import { CreateProdutoDto } from './dto/request/create-produto.dto';
 import { UpdateProdutoDto } from './dto/request/update-produto.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ResponseProdutos } from './dto/response/response-produto.dto';
+import { PaginationQueryDto } from 'src/shared/dto/pagination-query.dto';
+import { PaginatedProductsResponseDto } from 'src/shared/dto/paginated-response.dto';
 
 @Controller('produtos')
 export class ProdutoController {
@@ -47,8 +50,8 @@ export class ProdutoController {
    * @returns ResponseProdutos[]
    */
   @Get()
-  findAll(): Promise<ResponseProdutos[]> { 
-    return this.produtoService.findAll();
+  findAll(@Query() paginationQuery: PaginationQueryDto): Promise<PaginatedProductsResponseDto<ResponseProdutos>> { 
+    return this.produtoService.findAll(paginationQuery);
   }
 
   /**
@@ -68,11 +71,13 @@ export class ProdutoController {
    * @returns ResponseProdutos
    */
   @Patch(':id')
+  @UseInterceptors(FileInterceptor('image'))
   update(
-    @Param('id', ParseIntPipe) id: number, 
+    @Param('id', ParseIntPipe) id: number,
+    @UploadedFile() file: Express.Multer.File,
     @Body() updateProdutoDto: UpdateProdutoDto
   ): Promise<ResponseProdutos> { 
-    return this.produtoService.update(id, updateProdutoDto); 
+    return this.produtoService.update(id, updateProdutoDto, file?.filename); 
   }
 
   /**

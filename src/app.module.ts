@@ -10,8 +10,8 @@ import { join } from 'path';
     ConfigModule.forRoot({ isGlobal: true }),
 
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-      serveRoot: 'static'
+      rootPath: join(__dirname, '..', '..', 'public', 'uploads'), 
+      serveRoot: '/uploads',
     }),
 
     ModulesModule
