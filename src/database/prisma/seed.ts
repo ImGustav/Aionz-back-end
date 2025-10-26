@@ -11,14 +11,6 @@ const categoryData: Prisma.CategoryCreateInput[] = [
 
 const productData: Prisma.ProductCreateInput[] = [
   {
-    name: 'Notebook Ultra 15.6"',
-    description:
-      'Notebook de alta performance com 16GB RAM, 512GB SSD e processador i7.',
-    price: 4899.9,
-    image: '/uploads/notebook.jpg',
-    category: { connect: { name: 'Eletrônicos' } },
-  },
-  {
     name: 'Fone de Ouvido Bluetooth (Branco)',
     description:
       'Fone de ouvido sem fio com cancelamento de ruído e 20h de bateria.',
