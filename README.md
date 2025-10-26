@@ -102,13 +102,9 @@ Siga os passos abaixo para configurar e rodar o projeto API em sua máquina loca
     *(Isso aplicará as migrações e gerará o cliente Prisma).*
 
 6.  **Popule o Banco (Seed - Opcional):**
-    A partir da raiz do projeto (`back-end`), execute o comando de seed, especificando o local do schema:
+    A partir da pasta do prisma (`src/databse/prisma`), execute o comando de seed:
     ```bash
-    npx prisma db seed --schema=./src/database/prisma/schema.prisma
-
-    #ou caso esteja na pasta src/database/prisma use:
-
-    npx prisma db seed
+    npx prisma db seed 
     ```
     *(Isso irá criar algumas categorias e produtos pré-selecionados. As imagens desses produtos estarão dentro da pasta `public`).*
 
