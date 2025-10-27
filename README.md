@@ -166,6 +166,19 @@ Após iniciar o servidor, você pode acessá-la em:
 
 **[http://localhost:3000/api](http://localhost:3000/api)**
 
+## Testando com Postman
+
+Este projeto inclui uma coleção do Postman com exemplos de requisições para todos os endpoints da API.
+
+1.  **Localização:** O arquivo da coleção está em `/docs/AIONZ.postman_collection.json`.
+2.  **Importação:** Abra o Postman, vá em `File` > `Import...`, selecione o arquivo `.json` mencionado acima e importe-o.
+3.  **Ambiente (Environment):** A coleção utiliza uma variável `{{baseUrl}}`. Para que as requisições funcionem, configure um Ambiente no Postman com a seguinte variável:
+    * **Variável:** `baseUrl`
+    * **Valor Inicial/Atual:** `http://localhost:3000`.
+4.  **Uso:** Selecione o ambiente configurado no canto superior direito do Postman e execute as requisições da coleção AIONZ API.
+
+*(Certifique-se de que o servidor back-end esteja em execução antes de testar).*
+
 ## Autor
 
 **Gustavo Henrique Carvalho**
